@@ -8,7 +8,7 @@ RUN /usr/bin/apt-get update
 RUN /usr/bin/apt-get -y install locales locales-all vim
 RUN apt install -y cron
 
-RUN (crontab -l; echo "0 * * * * . /env; /usr/local/bin/ruby /app/upload.rb >> /var/tmp/test 2>&1") | crontab
+RUN (crontab -l; echo "*/10 * * * * . /env; /usr/local/bin/ruby /app/upload.rb >> /var/tmp/upload.txt 2>&1") | crontab
 
 
 ARG CLIENT_ID
