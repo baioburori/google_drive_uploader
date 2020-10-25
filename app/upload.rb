@@ -80,21 +80,27 @@ uploadMap = {}
 for video in encodedVideos
   uploadTargetMap = nil
   for map in fileAndTitleMaps
+    p 'video:' + video
+    p 'map-file:' + map['file']
     if (video === map['file'])
       uploadTargetMap = map
     end
   end
 
-  searched = false
-  for uploadedFile in uploadedFiles
-    if (uploadedFile === uploadTargetMap['title'])
-      searched = true
-    end
+  # ファイル名とタイトルのマップがnilじゃなかったら
+  # mp4のファイルをnot_encodedディレクトリに入れたときにnilになる
+  if (!uploadTargetMap.nil?)
+    searched = false
+    for uploadedFile in uploadedFiles
+      if (uploadedFile === uploadTargetMap['title'])
+        searched = true
+      end
 
-    # アップロード候補が最後までアップロード済みファイル群になかったら未アップロード
-    # アップロード対象にする
-    if (searched === false && uploadedFiles.last === uploadedFile)
-      uploadMap = uploadTargetMap
+      # アップロード候補が最後までアップロード済みファイル群になかったら未アップロード
+      # アップロード対象にする
+      if (searched === false && uploadedFiles.last === uploadedFile)
+        uploadMap = uploadTargetMap
+      end
     end
   end
 
